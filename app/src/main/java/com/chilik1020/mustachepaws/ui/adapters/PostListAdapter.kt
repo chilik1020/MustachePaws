@@ -1,4 +1,4 @@
-package com.chilik1020.mustachepaws.adapters
+package com.chilik1020.mustachepaws.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,11 +7,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.chilik1020.mustachepaws.R
 import com.chilik1020.mustachepaws.models.data.Post
+import com.chilik1020.mustachepaws.models.data.PostVO
 import kotlinx.android.synthetic.main.item_post.view.*
 
 class PostListAdapter : RecyclerView.Adapter<PostListAdapter.PostViewHolder>() {
 
-    private lateinit var items: List<Post>
+    private lateinit var items: List<PostVO>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_post, parent, false)
@@ -27,7 +28,7 @@ class PostListAdapter : RecyclerView.Adapter<PostListAdapter.PostViewHolder>() {
         holder.tvPostCreatedAt?.text = items[position].createdAt
     }
 
-    fun setData(items: List<Post>) {
+    fun setData(items: List<PostVO>) {
         this.items = items
         notifyDataSetChanged()
     }

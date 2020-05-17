@@ -1,9 +1,9 @@
-package com.chilik1020.mustachepaws.activities
+package com.chilik1020.mustachepaws.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.chilik1020.mustachepaws.R
-import com.chilik1020.mustachepaws.fragments.PostListFragment
+import com.chilik1020.mustachepaws.ui.fragments.LoginFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -17,9 +17,9 @@ class MainActivity : AppCompatActivity() {
                 return
             }
 
-            val postListFragment = PostListFragment()
+            val loginFragment = LoginFragment()
             supportFragmentManager.beginTransaction()
-                .add(R.id.fragment_container, postListFragment)
+                .add(R.id.fragment_container, loginFragment)
                 .commit()
         }
     }

@@ -1,33 +1,37 @@
+
 package com.chilik1020.mustachepaws.presenters
 
-import com.arellomobile.mvp.InjectViewState
-import com.arellomobile.mvp.MvpPresenter
-import com.chilik1020.mustachepaws.models.repository.PostReporitoryImpl
+import com.chilik1020.mustachepaws.models.repository.PostRepository
+import com.chilik1020.mustachepaws.utils.APPSCOPE
 import com.chilik1020.mustachepaws.views.PostListView
 import com.chilik1020.mustachepaws.viewstates.PostListViewState
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import java.lang.Exception
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import moxy.InjectViewState
+import moxy.MvpPresenter
+import toothpick.ktp.KTP
+import javax.inject.Inject
 
 @InjectViewState
 class PostListPresenter : MvpPresenter<PostListView>() {
 
-    private val repository = PostReporitoryImpl()
+    @Inject
+    lateinit var postRepository: PostRepository
+
+    init {
+        KTP.openScope(APPSCOPE).inject(this)
+    }
 
     fun fetchPosts() {
         viewState.render(PostListViewState.PostListLoadingState)
+        val subscription =  postRepository.fetchPosts()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { viewState.render(PostListViewState.PostListLoadingState) }
+            .subscribe({
+                        viewState.render(PostListViewState.PostListLoadedState(posts = it.posts))},
 
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                delay(3000)
-                val posts = repository.fetchPosts()
-                viewState.render(PostListViewState.PostListLoadedState(posts = posts))
-            } catch (ex : Exception) {
-                ex.printStackTrace()
-                viewState.render(PostListViewState.PostListErrorState(message = ex.localizedMessage))
-            }
-        }
+                        {viewState.render(PostListViewState.PostListErrorState(message = it?.localizedMessage.toString()))})
+
     }
 }

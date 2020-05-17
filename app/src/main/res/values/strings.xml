@@ -1,6 +1,33 @@
 <resources>
-    <string name="app_name">MustachePaws</string>
+    <string name="app_name">УсыЛапы</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="string_ad">Объявления</string>
+    <string name="string_filter">Фильтры</string>
+
+    <string name="empty" />
+    <string name="post_error">Cound not retrieve data</string>
+
+    <!--  Login/SignUp activities  -->
+    <string name="username">логин</string>
+    <string name="firstname">имя</string>
+    <string name="lastname">фамилия</string>
+    <string name="email">электронная почта</string>
+    <string name="phonenumber">телефон</string>
+    <string name="password">пароль</string>
+    <string name="password_confirm">подтверждение пароля</string>
+    <string name="login">Войти</string>
+    <string name="sign_up">Регистрация</string>
+    <string name="no_account">Нет аккаунта?</string>
+    <string name="register">Зарегистрироваться!</string>
+    <string name="login_error_msg">Ошибка в комбинации имя пользователя-пароль</string>
+    <string name="signup_error_msg">Ошибка при регистрации</string>
+    <string name="username_empty_error">Имя пользователя не может быть пустым</string>
+
+    <string name="public_post">Опубликовать</string>
+    <string name="description">Описание</string>
+    <string name="image_link">Ссылка</string>
+
+
+    <!--  Toolbar menu  -->
+    <string name="menu_logout">Выйти</string>
 </resources>
