@@ -4,6 +4,7 @@ import com.chilik1020.mustachepaws.models.data.LoginRequestObject
 import com.chilik1020.mustachepaws.models.data.UserVO
 import com.chilik1020.mustachepaws.models.local.AppPreferences
 import com.chilik1020.mustachepaws.models.remote.RetrofitClient
+import com.chilik1020.mustachepaws.models.repository.UserRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -12,6 +13,9 @@ class LoginInteractorImpl : LoginInteractor {
 
     @Inject
     lateinit var client: RetrofitClient
+
+    @Inject
+    lateinit var userRepository: UserRepository
 
     override lateinit var userDetails: UserVO
     override lateinit var accessToken: String
@@ -42,7 +46,7 @@ class LoginInteractorImpl : LoginInteractor {
     override fun retrieveDetails(preferences: AppPreferences,
         listener: LoginInteractor.OnDetailsRetrievalFinishedListener
     ) {
-        val disposable = client.serviceApi.echoDetails(preferences.accessToken as String)
+        val disposable = userRepository.echoDetails()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ res ->
