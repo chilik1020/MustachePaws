@@ -1,56 +1,58 @@
 package com.chilik1020.mustachepaws.interactors
 
 import com.chilik1020.mustachepaws.models.data.LoginRequestObject
+import com.chilik1020.mustachepaws.models.data.UserRequestObject
 import com.chilik1020.mustachepaws.models.data.UserVO
 import com.chilik1020.mustachepaws.models.local.AppPreferences
 import com.chilik1020.mustachepaws.models.remote.RetrofitClient
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
 import javax.inject.Inject
 
-class LoginInteractorImpl : LoginInteractor {
+class SignUpInteractorImpl : SignUpInteractor {
 
     @Inject
-    lateinit var client: RetrofitClient
+    lateinit var client : RetrofitClient
 
     override lateinit var userDetails: UserVO
     override lateinit var accessToken: String
     override lateinit var submittedUsername: String
     override lateinit var submittedPassword: String
 
-    override fun login(username: String, password: String,
-        listener: AuthInteractor.OnAuthFinishedListener) {
-        submittedUsername = username
-        submittedPassword = password
-        val loginRequestObject = LoginRequestObject(username, password)
-        val subscribe = client.serviceApi.login(loginRequestObject)
+    override fun signUp(user: UserRequestObject,
+        listener: SignUpInteractor.OnSignUpFinishedListener
+    ) {
+        submittedUsername = user.username
+        submittedPassword = user.password
+
+        val subscribe = client.serviceApi.createUser(user)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ res ->
-                if (res.code() != 403) {
-                    accessToken = res.headers()["Authorization"] as String
-                    listener.onAuthSuccess()
-                } else
-                    listener.onAuthError()
-            },
+            .subscribe(
+                { res ->
+                    userDetails = res
+                    listener.onSuccess()
+                },
                 { error ->
-                    listener.onAuthError()
+                    val serverError = error as HttpException
+                    listener.onError(serverError.message().toString())
                     error.printStackTrace()
                 })
     }
 
-    override fun retrieveDetails(preferences: AppPreferences,
-        listener: LoginInteractor.OnDetailsRetrievalFinishedListener
-    ) {
-        val disposable = client.serviceApi.echoDetails(preferences.accessToken as String)
+    override fun getAuthorization(listener: AuthInteractor.OnAuthFinishedListener) {
+        val loginRequestObject = LoginRequestObject(submittedUsername, submittedPassword)
+        val subscribe = client.serviceApi.login(loginRequestObject)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ res ->
-                userDetails = res
-                listener.onDetailsRetrievalSuccess()
-            },
+            .subscribe(
+                { res ->
+                    accessToken = res.headers()["Authorization"] as String
+                    listener.onAuthSuccess()
+                },
                 { error ->
-                    listener.onDetailsRetrievalError()
+                    listener.onAuthError()
                     error.printStackTrace()
                 })
     }

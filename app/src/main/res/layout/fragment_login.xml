@@ -25,7 +25,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tietLogin"
+                android:id="@+id/tietUsernameLoginF"
                 android:layout_width="@dimen/default_input_field_width"
                 android:layout_height="@dimen/default_input_field_height"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -38,7 +38,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tietPassword"
+                android:id="@+id/tietPasswordLoginF"
                 android:layout_width="@dimen/default_input_field_width"
                 android:layout_height="@dimen/default_input_field_height"
                 android:inputType="textPassword"/>

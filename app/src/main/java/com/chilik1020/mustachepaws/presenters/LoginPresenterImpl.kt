@@ -25,9 +25,9 @@ class LoginPresenterImpl : MvpPresenter<LoginView>(),LoginPresenter,
         KTP.openScope(APPSCOPE).inject(this)
     }
 
-    override fun executeLogin(login: String, password: String) {
+    override fun executeLogin(username: String, password: String) {
         viewState.render(LoginViewState.LoginLoadingState)
-        interactor.login(login, password, this)
+        interactor.login(username, password, this)
     }
 
     override fun onAuthSuccess() {
@@ -36,15 +36,7 @@ class LoginPresenterImpl : MvpPresenter<LoginView>(),LoginPresenter,
     }
 
     override fun onAuthError() {
-        viewState.render(LoginViewState.LoginErrorState("Auth error"))
-    }
-
-    override fun onUsernameError() {
-        viewState.render(LoginViewState.LoginErrorState("Login error"))
-    }
-
-    override fun onPasswordError() {
-        viewState.render(LoginViewState.LoginErrorState("Login error"))
+        viewState.render(LoginViewState.LoginErrorState("Authentication error"))
     }
 
     override fun onDetailsRetrievalSuccess() {

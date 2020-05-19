@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 
 import com.chilik1020.mustachepaws.R
-import com.chilik1020.mustachepaws.presenters.LoginPresenter
 import com.chilik1020.mustachepaws.presenters.LoginPresenterImpl
 import com.chilik1020.mustachepaws.views.LoginView
 import com.chilik1020.mustachepaws.viewstates.LoginViewState
@@ -32,15 +31,13 @@ class LoginFragment : MvpAppCompatFragment(), LoginView, View.OnClickListener {
 
     override fun onClick(v: View) {
         when(v.id) {
-            R.id.btnLogin -> presenter.executeLogin(tietLogin.text.toString(), tietPassword.text.toString())
+            R.id.btnLogin -> presenter.executeLogin(tietUsernameLoginF.text.toString(), tietPasswordLoginF.text.toString())
 
-            R.id.tvRegister -> TODO()
+            R.id.tvRegister -> navigateToSignUpFragment()
         }
     }
 
-
     override fun render(state: LoginViewState) {
-
         when(state) {
             is LoginViewState.LoginLoadingState -> {
                 pbLoginLoading.visibility = View.VISIBLE
@@ -48,7 +45,8 @@ class LoginFragment : MvpAppCompatFragment(), LoginView, View.OnClickListener {
 
             is LoginViewState.LoggedState -> {
                 pbLoginLoading.visibility = View.GONE
-                Toast.makeText(activity, "You are successfully logged in!", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, "You have successfully logged in!", Toast.LENGTH_LONG).show()
+                navigateToPostListFragment()
             }
 
             is LoginViewState.LoginErrorState -> {
@@ -56,6 +54,18 @@ class LoginFragment : MvpAppCompatFragment(), LoginView, View.OnClickListener {
                 Toast.makeText(activity, state.message, Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    private fun navigateToSignUpFragment() {
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.replace(R.id.fragment_container, SignUpFragment())
+            ?.commit()
+    }
+
+    private fun navigateToPostListFragment() {
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.replace(R.id.fragment_container, PostListFragment())
+            ?.commit()
     }
 
 }
