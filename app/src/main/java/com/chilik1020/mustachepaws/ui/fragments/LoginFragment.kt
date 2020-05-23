@@ -1,25 +1,37 @@
 package com.chilik1020.mustachepaws.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 
 import com.chilik1020.mustachepaws.R
+import com.chilik1020.mustachepaws.Screens
 import com.chilik1020.mustachepaws.presenters.LoginPresenterImpl
+import com.chilik1020.mustachepaws.ui.base.BackButtonListener
+import com.chilik1020.mustachepaws.utils.APPSCOPE
+import com.chilik1020.mustachepaws.utils.LOG_TAG
 import com.chilik1020.mustachepaws.views.LoginView
 import com.chilik1020.mustachepaws.viewstates.LoginViewState
 import kotlinx.android.synthetic.main.fragment_login.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
+import ru.terrakok.cicerone.Router
+import toothpick.ktp.KTP
+import javax.inject.Inject
 
-class LoginFragment : MvpAppCompatFragment(), LoginView, View.OnClickListener {
+class LoginFragment : MvpAppCompatFragment(), LoginView, View.OnClickListener, BackButtonListener {
+
+    @Inject
+    lateinit var router: Router
 
     @InjectPresenter
     lateinit var presenter : LoginPresenterImpl
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
+        KTP.openScope(APPSCOPE).inject(this)
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
@@ -57,15 +69,14 @@ class LoginFragment : MvpAppCompatFragment(), LoginView, View.OnClickListener {
     }
 
     private fun navigateToSignUpFragment() {
-        activity?.supportFragmentManager?.beginTransaction()
-            ?.replace(R.id.fragment_container, SignUpFragment())
-            ?.commit()
+        router.navigateTo(Screens.SignUpScreen())
     }
 
     private fun navigateToPostListFragment() {
-        activity?.supportFragmentManager?.beginTransaction()
-            ?.replace(R.id.fragment_container, PostListFragment())
-            ?.commit()
+        router.replaceScreen(Screens.PostListScreen())
     }
 
+    override fun onBackPressed() {
+        router.exit()
+    }
 }

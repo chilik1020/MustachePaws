@@ -1,5 +1,6 @@
 package com.chilik1020.mustachepaws.presenters
 
+import com.chilik1020.mustachepaws.Screens
 import com.chilik1020.mustachepaws.interactors.AuthInteractor
 import com.chilik1020.mustachepaws.interactors.LoginInteractor
 import com.chilik1020.mustachepaws.models.local.AppPreferences
@@ -8,6 +9,7 @@ import com.chilik1020.mustachepaws.views.LoginView
 import com.chilik1020.mustachepaws.viewstates.LoginViewState
 import moxy.InjectViewState
 import moxy.MvpPresenter
+import ru.terrakok.cicerone.Router
 import toothpick.ktp.KTP
 import javax.inject.Inject
 
@@ -20,6 +22,9 @@ class LoginPresenterImpl : MvpPresenter<LoginView>(),LoginPresenter,
 
     @Inject
     lateinit var preferences: AppPreferences
+
+    @Inject
+    lateinit var router: Router
 
     init {
         KTP.openScope(APPSCOPE).inject(this)
@@ -46,5 +51,9 @@ class LoginPresenterImpl : MvpPresenter<LoginView>(),LoginPresenter,
 
     override fun onDetailsRetrievalError() {
         interactor.retrieveDetails(preferences, this)
+    }
+
+    fun onSignUpPressed() {
+        router.navigateTo(Screens.SignUpScreen())
     }
 }

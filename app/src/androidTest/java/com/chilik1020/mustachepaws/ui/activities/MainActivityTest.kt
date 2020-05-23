@@ -10,7 +10,7 @@ import com.chilik1020.mustachepaws.rules.ActivityTestRule
 
 
 import org.junit.Rule
-import org.junit.jupiter.api.Test
+import org.junit.Test
 
 
 internal class MainActivityTest {

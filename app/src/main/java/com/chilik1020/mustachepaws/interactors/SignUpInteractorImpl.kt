@@ -5,9 +5,9 @@ import com.chilik1020.mustachepaws.models.data.UserRequestObject
 import com.chilik1020.mustachepaws.models.data.UserVO
 import com.chilik1020.mustachepaws.models.local.AppPreferences
 import com.chilik1020.mustachepaws.models.remote.RetrofitClient
+import com.chilik1020.mustachepaws.utils.getMessageFromThrowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import retrofit2.HttpException
 import javax.inject.Inject
 
 class SignUpInteractorImpl : SignUpInteractor {
@@ -35,8 +35,8 @@ class SignUpInteractorImpl : SignUpInteractor {
                     listener.onSuccess()
                 },
                 { error ->
-                    val serverError = error as HttpException
-                    listener.onError(serverError.message().toString())
+                    val message =  getMessageFromThrowable(error)
+                    listener.onError(message)
                     error.printStackTrace()
                 })
     }

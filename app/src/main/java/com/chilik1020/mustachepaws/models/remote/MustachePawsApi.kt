@@ -1,13 +1,12 @@
 package com.chilik1020.mustachepaws.models.remote
 
-import com.chilik1020.mustachepaws.models.data.LoginRequestObject
-import com.chilik1020.mustachepaws.models.data.PostListVO
-import com.chilik1020.mustachepaws.models.data.UserRequestObject
-import com.chilik1020.mustachepaws.models.data.UserVO
+import com.chilik1020.mustachepaws.models.data.*
 import com.chilik1020.mustachepaws.utils.BASE_URL
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -29,6 +28,16 @@ interface MustachePawsApi {
 
     @GET("mustachepaws/posts/all")
     fun fetchPosts(@Header("Authorization") authorization: String): Observable<PostListVO>
+
+    @POST("mustachepaws/posts/add")
+    fun createPost(@Body post: PostRequestObject, @Header("Authorization")authorization: String): Observable<PostVO>
+
+    @Multipart
+    @POST("mustachepaws/posts/create")
+    fun createPostWithPhoto(@Part("description") description: RequestBody,
+                            @Part("creatorUsername") creatorUsername: RequestBody,
+                            @Part file: MultipartBody.Part,
+                            @Header("Authorization")authorization: String): Observable<PostVO>
 
     companion object Factory {
         private var service: MustachePawsApi? = null

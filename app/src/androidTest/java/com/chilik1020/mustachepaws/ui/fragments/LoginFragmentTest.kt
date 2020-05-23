@@ -1,11 +1,11 @@
 package com.chilik1020.mustachepaws.ui.fragments
 
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.*
+import org.junit.Test
+
 
 internal class LoginFragmentTest {
 
-    @org.junit.jupiter.api.Test
+    @Test
     fun onClick() {
     }
 

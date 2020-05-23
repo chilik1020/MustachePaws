@@ -7,6 +7,5 @@ import moxy.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(value = AddToEndSingleStrategy::class)
 interface LoginView : MvpView {
-
     fun render(state: LoginViewState)
 }

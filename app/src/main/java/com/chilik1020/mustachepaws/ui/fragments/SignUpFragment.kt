@@ -7,15 +7,22 @@ import android.view.ViewGroup
 import android.widget.Toast
 
 import com.chilik1020.mustachepaws.R
+import com.chilik1020.mustachepaws.Screens
 import com.chilik1020.mustachepaws.models.data.UserRequestObject
 import com.chilik1020.mustachepaws.presenters.SignUpPresenterImpl
+import com.chilik1020.mustachepaws.utils.APPSCOPE
 import com.chilik1020.mustachepaws.views.SignUpView
 import com.chilik1020.mustachepaws.viewstates.SignUpViewState
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
+import ru.terrakok.cicerone.Router
+import toothpick.ktp.KTP
+import javax.inject.Inject
 
 class SignUpFragment : MvpAppCompatFragment(), SignUpView, View.OnClickListener {
+    @Inject
+    lateinit var router: Router
 
     @InjectPresenter
     lateinit var presenter: SignUpPresenterImpl
@@ -24,6 +31,7 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView, View.OnClickListener 
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        KTP.openScope(APPSCOPE).inject(this)
         return inflater.inflate(R.layout.fragment_sign_up, container, false)
     }
 
@@ -66,8 +74,6 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView, View.OnClickListener 
     }
 
     private fun navigateToPostListFragment() {
-        activity?.supportFragmentManager?.beginTransaction()
-            ?.replace(R.id.fragment_container, PostListFragment())
-            ?.commit()
+        router.replaceScreen(Screens.PostListScreen())
     }
 }
