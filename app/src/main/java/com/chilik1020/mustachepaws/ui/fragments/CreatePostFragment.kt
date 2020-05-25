@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,9 +15,11 @@ import com.bumptech.glide.Glide
 import com.chilik1020.mustachepaws.BuildConfig
 
 import com.chilik1020.mustachepaws.R
+import com.chilik1020.mustachepaws.Screens
 import com.chilik1020.mustachepaws.presenters.CreatePostPresenterImpl
 import com.chilik1020.mustachepaws.utils.APPSCOPE
 import com.chilik1020.mustachepaws.utils.LOG_TAG
+import com.chilik1020.mustachepaws.utils.createImageFile
 import com.chilik1020.mustachepaws.views.CreatePostView
 import com.chilik1020.mustachepaws.viewstates.CreatePostViewState
 import com.yalantis.ucrop.UCrop
@@ -28,8 +29,6 @@ import moxy.presenter.InjectPresenter
 import ru.terrakok.cicerone.Router
 import toothpick.ktp.KTP
 import java.io.File
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
 
 const val REQUEST_IMAGE_CAPTURE = 1
@@ -42,17 +41,14 @@ class CreatePostFragment : MvpAppCompatFragment(), CreatePostView {
     @InjectPresenter
     lateinit var presenter: CreatePostPresenterImpl
 
-    lateinit var imageFilePath: String
-    lateinit var imageCroppedFilePath: String
+    lateinit var photoOriginalFile: File
+    lateinit var photoCroppedFile: File
 
     lateinit var photoOriginalUri: Uri
     lateinit var photoCroppedUri: Uri
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         KTP.openScope(APPSCOPE).inject(this)
         return inflater.inflate(R.layout.fragment_create_post, container, false)
     }
@@ -64,82 +60,68 @@ class CreatePostFragment : MvpAppCompatFragment(), CreatePostView {
 
     private fun initViews() {
         ivPhotoCreatePostF.setOnClickListener { onClickImageCapture() }
-        btnCreatePost.setOnClickListener { presenter.createPost(tietDescriptionCreatePostF.text.toString(),
-                                                                imageCroppedFilePath) }
+        btnCreatePost.setOnClickListener {
+            presenter.createPost(
+                tietDescriptionCreatePostF.text.toString(),
+                photoCroppedFile.absolutePath) }
     }
 
     private fun onClickImageCapture() {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also {  intent ->
-            intent.resolveActivity(requireActivity().packageManager)?.also {
-                val photoFile: File? = try {
-                    createImageFile("original")
-                } catch (ex: Exception) {
-                    null
-                }
-
-                val photoCroppedFile: File? = try {
-                    createImageFile("cropped")
-                } catch (ex: Exception) {
-                    null
-                }
-                Log.d(LOG_TAG, "Original: ${photoFile?.exists()}")
-                Log.d(LOG_TAG, "Cropped: ${photoCroppedFile?.exists()}")
-
-                photoCroppedFile?.also {
-                    photoCroppedUri = Uri.fromFile(it)
-//                    photoCroppedUri = FileProvider.getUriForFile(
-//                        this,
-//                        "${BuildConfig.APPLICATION_ID}.provider",
-//                        it
-//                    )
-                    imageCroppedFilePath = it.absolutePath
-                    Log.d(LOG_TAG, "CROPPED URI: ${it.absolutePath}")
-                }
-
-                photoFile?.also {
-                    photoOriginalUri = FileProvider.getUriForFile(
-                        requireContext(),
-                        "${BuildConfig.APPLICATION_ID}.provider",
-                        it
-                    )
-                    imageFilePath = it.absolutePath
-                    Log.d(LOG_TAG, "ORIGINAL URI: ${it.absolutePath}")
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, photoOriginalUri)
-                    startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
-                }
-            }
-        }
+        createImageFiles()
+        startImageCapture()
     }
 
+    private fun createImageFiles() {
+        photoOriginalFile = createImageFile(requireContext(),"original")
+        photoCroppedFile = createImageFile(requireContext(), "cropped")
+
+        if (!photoOriginalFile.exists() || !photoCroppedFile.exists())
+            return
+
+        photoCroppedUri = Uri.fromFile(photoCroppedFile)
+        photoOriginalUri = FileProvider.getUriForFile(
+            requireContext(),
+            "${BuildConfig.APPLICATION_ID}.provider",
+            photoOriginalFile
+        )
+
+        Log.d(LOG_TAG, "ORIGINAL PATH: ${photoOriginalFile.absolutePath}")
+        Log.d(LOG_TAG, "CROPPED PATH: ${photoCroppedFile.absolutePath}")
+        Log.d(LOG_TAG, "ORIGINAL URI: $photoOriginalUri")
+        Log.d(LOG_TAG, "CROPPED URI: $photoCroppedUri")
+    }
+
+    private fun startImageCapture() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE).apply {
+            putExtra(MediaStore.EXTRA_OUTPUT, photoOriginalUri)
+        }
+        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
+    }
 
     private fun startUCropActivity() {
         UCrop.of(photoOriginalUri, photoCroppedUri)
             .withAspectRatio(1f, 1f)
             .withMaxResultSize(1080, 1080)
-            .start(requireActivity())
+            .start(requireActivity(), this)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        Log.d(LOG_TAG, "ON ACTIVITY REQUEST CODE : $requestCode")
         if (resultCode == Activity.RESULT_OK) {
             when(requestCode) {
                 REQUEST_IMAGE_CAPTURE -> {
+                    Glide.with(this).load(photoOriginalUri).into(ivPhotoCreatePostF)
                     startUCropActivity()
-                    Glide.with(this).load(imageFilePath).into(ivPhotoCreatePostF)
                 }
 
                 UCrop.REQUEST_CROP -> {
-                    data?.let {
-                        UCrop.getOutput(it).also {
-                            photoCroppedUri = it!!
-                            Glide.with(this).load(photoCroppedUri).into(ivPhotoCreatePostF)
-                        }
-                    }
+                    Glide.with(this).load(photoCroppedUri).into(ivPhotoCreatePostF)
                 }
             }
         } else if (resultCode == UCrop.RESULT_ERROR) {
-            val throwable = UCrop.getError(data!!)
-            Log.d(LOG_TAG, throwable?.message)
+            val throwable = data?.let { UCrop.getError(it) }
+            Log.d(LOG_TAG, throwable?.message.toString())
         }
     }
 
@@ -151,7 +133,8 @@ class CreatePostFragment : MvpAppCompatFragment(), CreatePostView {
 
             is CreatePostViewState.PostCreatedState -> {
                 pbCreatePostLoading.visibility = View.GONE
-
+                Toast.makeText(activity, "Post created", Toast.LENGTH_LONG).show()
+                router.replaceScreen(Screens.PostListScreen())
             }
 
             is CreatePostViewState.PostCreateErrorState -> {
@@ -159,12 +142,5 @@ class CreatePostFragment : MvpAppCompatFragment(), CreatePostView {
                 Toast.makeText(activity, state.message, Toast.LENGTH_LONG).show()
             }
         }
-    }
-
-    private fun createImageFile(prefix: String): File {
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-        val imageFileName = "img_${prefix}_${timeStamp}_"
-        val storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(imageFileName, ".jpg", storageDir)
     }
 }

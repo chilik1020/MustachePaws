@@ -27,12 +27,10 @@ class CreatePostPresenterImpl : MvpPresenter<CreatePostView>(),
     }
 
     override fun onSuccess(post: PostVO) {
-        TODO("Not yet implemented")
+        viewState.render(CreatePostViewState.PostCreatedState)
     }
 
-    override fun onError() {
-        TODO("Not yet implemented")
+    override fun onError(error: String) {
+        viewState.render(CreatePostViewState.PostCreateErrorState(error))
     }
-
-
 }

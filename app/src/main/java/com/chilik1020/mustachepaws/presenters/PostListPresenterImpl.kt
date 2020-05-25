@@ -12,7 +12,8 @@ import toothpick.ktp.KTP
 import javax.inject.Inject
 
 @InjectViewState
-class PostListPresenterImpl : MvpPresenter<PostListView>(), FetchPostsInteractor.OnFetchFinishedListener {
+class PostListPresenterImpl : MvpPresenter<PostListView>(),
+    FetchPostsInteractor.OnFetchFinishedListener {
 
     @Inject
     lateinit var interactor: FetchPostsInteractor

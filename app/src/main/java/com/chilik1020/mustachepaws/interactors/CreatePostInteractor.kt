@@ -6,8 +6,8 @@ interface CreatePostInteractor {
 
     interface OnPostCreatedListener {
         fun onSuccess(post: PostVO)
-        fun onError()
+        fun onError(error: String)
     }
 
-    fun createPost(description: String, image: String, listener: OnPostCreatedListener): PostVO
+    fun createPost(description: String, image: String, listener: OnPostCreatedListener)
 }
