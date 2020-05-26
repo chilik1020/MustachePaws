@@ -12,7 +12,7 @@ interface AuthInteractor {
 
     interface OnAuthFinishedListener {
         fun onAuthSuccess()
-        fun onAuthError()
+        fun onAuthError(message: String)
     }
 
     fun persistAccessToken(preferences: AppPreferences)

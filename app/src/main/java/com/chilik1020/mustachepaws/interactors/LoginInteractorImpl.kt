@@ -5,6 +5,7 @@ import com.chilik1020.mustachepaws.models.data.UserVO
 import com.chilik1020.mustachepaws.models.local.AppPreferences
 import com.chilik1020.mustachepaws.models.remote.MustachePawsApi
 import com.chilik1020.mustachepaws.models.repository.UserRepository
+import com.chilik1020.mustachepaws.utils.getMessageFromThrowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -35,10 +36,11 @@ class LoginInteractorImpl : LoginInteractor {
                     accessToken = res.headers()["Authorization"] as String
                     listener.onAuthSuccess()
                 } else
-                    listener.onAuthError()
+                    listener.onAuthError("Ошибка входа")
             },
                 { error ->
-                    listener.onAuthError()
+                    val message =  getMessageFromThrowable(error)
+                    listener.onAuthError(message)
                     error.printStackTrace()
                 })
     }

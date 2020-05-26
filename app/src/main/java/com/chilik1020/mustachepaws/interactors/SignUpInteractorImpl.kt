@@ -52,7 +52,8 @@ class SignUpInteractorImpl : SignUpInteractor {
                     listener.onAuthSuccess()
                 },
                 { error ->
-                    listener.onAuthError()
+                    val message = getMessageFromThrowable(error)
+                    listener.onAuthError(message)
                     error.printStackTrace()
                 })
     }

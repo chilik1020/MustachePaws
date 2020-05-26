@@ -5,6 +5,8 @@ import com.chilik1020.mustachepaws.interactors.AuthInteractor
 import com.chilik1020.mustachepaws.interactors.LoginInteractor
 import com.chilik1020.mustachepaws.models.local.AppPreferences
 import com.chilik1020.mustachepaws.utils.APPSCOPE
+import com.chilik1020.mustachepaws.utils.checkPasswordInLoginForm
+import com.chilik1020.mustachepaws.utils.checkUsernameInLoginForm
 import com.chilik1020.mustachepaws.views.LoginView
 import com.chilik1020.mustachepaws.viewstates.LoginViewState
 import moxy.InjectViewState
@@ -31,8 +33,27 @@ class LoginPresenterImpl : MvpPresenter<LoginView>(),LoginPresenter,
     }
 
     override fun executeLogin(username: String, password: String) {
+        if(!isLoginFormCorrect(username, password))
+            return
+
         viewState.render(LoginViewState.LoginLoadingState)
         interactor.login(username, password, this)
+    }
+
+    private fun isLoginFormCorrect(username: String, password: String): Boolean {
+        val usernameErrorMessage = checkUsernameInLoginForm(username)
+        if (usernameErrorMessage != null) {
+            viewState.render(LoginViewState.UsernameErrorState(usernameErrorMessage))
+            return false
+        }
+
+        val passwordErrorMessage = checkPasswordInLoginForm(password)
+        if (passwordErrorMessage != null) {
+            viewState.render(LoginViewState.PasswordErrorState(passwordErrorMessage))
+            return false
+        }
+
+        return true
     }
 
     override fun onAuthSuccess() {
@@ -40,8 +61,8 @@ class LoginPresenterImpl : MvpPresenter<LoginView>(),LoginPresenter,
         interactor.retrieveDetails(preferences, this)
     }
 
-    override fun onAuthError() {
-        viewState.render(LoginViewState.LoginErrorState("Authentication error"))
+    override fun onAuthError(message: String) {
+        viewState.render(LoginViewState.LoginErrorState(message))
     }
 
     override fun onDetailsRetrievalSuccess() {
@@ -51,9 +72,5 @@ class LoginPresenterImpl : MvpPresenter<LoginView>(),LoginPresenter,
 
     override fun onDetailsRetrievalError() {
         interactor.retrieveDetails(preferences, this)
-    }
-
-    fun onSignUpPressed() {
-        router.navigateTo(Screens.SignUpScreen())
     }
 }

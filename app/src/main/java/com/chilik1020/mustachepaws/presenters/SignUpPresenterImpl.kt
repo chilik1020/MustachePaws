@@ -41,8 +41,8 @@ class SignUpPresenterImpl : MvpPresenter<SignUpView>(), SignUpPresenter,
         viewState.render(SignUpViewState.SignUpFinishedState)
     }
 
-    override fun onAuthError() {
-        viewState.render(SignUpViewState.SignUpErrorState("Can't log in"))
+    override fun onAuthError(message: String) {
+        viewState.render(SignUpViewState.SignUpErrorState(message))
     }
 
     override fun onError(message: String) {
