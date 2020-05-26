@@ -3,7 +3,7 @@ package com.chilik1020.mustachepaws.interactors
 import com.chilik1020.mustachepaws.models.data.LoginRequestObject
 import com.chilik1020.mustachepaws.models.data.UserVO
 import com.chilik1020.mustachepaws.models.local.AppPreferences
-import com.chilik1020.mustachepaws.models.remote.RetrofitClient
+import com.chilik1020.mustachepaws.models.remote.MustachePawsApi
 import com.chilik1020.mustachepaws.models.repository.UserRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -12,7 +12,7 @@ import javax.inject.Inject
 class LoginInteractorImpl : LoginInteractor {
 
     @Inject
-    lateinit var client: RetrofitClient
+    lateinit var service: MustachePawsApi
 
     @Inject
     lateinit var userRepository: UserRepository
@@ -27,7 +27,7 @@ class LoginInteractorImpl : LoginInteractor {
         submittedUsername = username
         submittedPassword = password
         val loginRequestObject = LoginRequestObject(username, password)
-        val subscribe = client.serviceApi.login(loginRequestObject)
+        val subscribe = service.login(loginRequestObject)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ res ->

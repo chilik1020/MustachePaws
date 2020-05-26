@@ -1,10 +1,7 @@
 package com.chilik1020.mustachepaws
 
 import android.app.Application
-import com.chilik1020.mustachepaws.di.AppModule
-import com.chilik1020.mustachepaws.di.InteractorModule
-import com.chilik1020.mustachepaws.di.NavigationModule
-import com.chilik1020.mustachepaws.di.RepositoryModule
+import com.chilik1020.mustachepaws.di.*
 import com.chilik1020.mustachepaws.utils.APPSCOPE
 import toothpick.ktp.KTP
 import toothpick.configuration.Configuration
@@ -26,6 +23,7 @@ class MyApp : Application() {
             .installModules(
                 AppModule(this),
                 NavigationModule(),
+                NetworkModule(),
                 RepositoryModule(),
                 InteractorModule())
     }

@@ -4,7 +4,7 @@ import com.chilik1020.mustachepaws.models.data.LoginRequestObject
 import com.chilik1020.mustachepaws.models.data.UserRequestObject
 import com.chilik1020.mustachepaws.models.data.UserVO
 import com.chilik1020.mustachepaws.models.local.AppPreferences
-import com.chilik1020.mustachepaws.models.remote.RetrofitClient
+import com.chilik1020.mustachepaws.models.remote.MustachePawsApi
 import com.chilik1020.mustachepaws.utils.getMessageFromThrowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -13,7 +13,7 @@ import javax.inject.Inject
 class SignUpInteractorImpl : SignUpInteractor {
 
     @Inject
-    lateinit var client : RetrofitClient
+    lateinit var service : MustachePawsApi
 
     override lateinit var userDetails: UserVO
     override lateinit var accessToken: String
@@ -26,7 +26,7 @@ class SignUpInteractorImpl : SignUpInteractor {
         submittedUsername = user.username
         submittedPassword = user.password
 
-        val subscribe = client.serviceApi.createUser(user)
+        val subscribe = service.createUser(user)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -43,7 +43,7 @@ class SignUpInteractorImpl : SignUpInteractor {
 
     override fun getAuthorization(listener: AuthInteractor.OnAuthFinishedListener) {
         val loginRequestObject = LoginRequestObject(submittedUsername, submittedPassword)
-        val subscribe = client.serviceApi.login(loginRequestObject)
+        val subscribe = service.login(loginRequestObject)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

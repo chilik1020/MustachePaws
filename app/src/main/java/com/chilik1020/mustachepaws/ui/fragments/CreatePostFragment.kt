@@ -72,6 +72,8 @@ class CreatePostFragment : MvpAppCompatFragment(), CreatePostView {
     }
 
     private fun createImageFiles() {
+        ivPhotoCreatePostF.setImageResource(android.R.color.transparent)
+
         photoOriginalFile = createImageFile(requireContext(),"original")
         photoCroppedFile = createImageFile(requireContext(), "cropped")
 
