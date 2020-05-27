@@ -52,42 +52,39 @@ class LoginFragment : MvpAppCompatFragment(), LoginView, View.OnClickListener, B
     }
 
     override fun render(state: LoginViewState) {
+        resetViews()
         when(state) {
             is LoginViewState.LoginLoadingState -> {
                 pbLoginLoading.visibility = View.VISIBLE
-                tilUsernameLoginF.error = null
-                tilPasswordLoginF.error = null
             }
 
             is LoginViewState.LoggedState -> {
-                pbLoginLoading.visibility = View.GONE
-                tilUsernameLoginF.error = null
-                tilPasswordLoginF.error = null
                 Toast.makeText(activity, "You have successfully logged in!", Toast.LENGTH_LONG).show()
                 navigateToPostListFragment()
             }
 
             is LoginViewState.LoginErrorState -> {
-                pbLoginLoading.visibility = View.GONE
                 tilUsernameLoginF.error = state.message
                 tilPasswordLoginF.error = " "
                 Toast.makeText(activity, state.message, Toast.LENGTH_LONG).show()
             }
 
             is LoginViewState.UsernameErrorState -> {
-                pbLoginLoading.visibility = View.GONE
                 tilUsernameLoginF.error = state.message
-                tilPasswordLoginF.error = null
                 Toast.makeText(activity, state.message, Toast.LENGTH_LONG).show()
             }
 
             is LoginViewState.PasswordErrorState -> {
-                pbLoginLoading.visibility = View.GONE
-                tilUsernameLoginF.error = null
                 tilPasswordLoginF.error = state.message
                 Toast.makeText(activity, state.message, Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    private fun resetViews() {
+        pbLoginLoading.visibility = View.GONE
+        tilUsernameLoginF.error = null
+        tilPasswordLoginF.error = null
     }
 
     private fun navigateToSignUpFragment() {

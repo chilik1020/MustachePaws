@@ -4,7 +4,7 @@ import com.chilik1020.mustachepaws.interactors.AuthInteractor
 import com.chilik1020.mustachepaws.interactors.SignUpInteractor
 import com.chilik1020.mustachepaws.models.data.UserRequestObject
 import com.chilik1020.mustachepaws.models.local.AppPreferences
-import com.chilik1020.mustachepaws.utils.APPSCOPE
+import com.chilik1020.mustachepaws.utils.*
 import com.chilik1020.mustachepaws.views.SignUpView
 import com.chilik1020.mustachepaws.viewstates.SignUpViewState
 import moxy.InjectViewState
@@ -26,9 +26,41 @@ class SignUpPresenterImpl : MvpPresenter<SignUpView>(), SignUpPresenter,
         KTP.openScope(APPSCOPE).inject(this)
     }
 
-    override fun executeSignUp(user: UserRequestObject) {
+    override fun executeSignUp(username: String, email: String, password: String, confirmPassword: String) {
+
+        if(!isSignUpFormCorrect(username, email, password, confirmPassword))
+            return
+
         viewState.render(SignUpViewState.SignUpLoadingState)
-        interactor.signUp(user, this)
+        interactor.signUp(UserRequestObject(username, "", "", email, "", password), this)
+    }
+
+    private fun isSignUpFormCorrect(username: String, email: String, password: String, confirmPassword: String): Boolean {
+        val usernameErrorMessage = checkUsernameInSignUpForm(username)
+        if (usernameErrorMessage != null) {
+            viewState.render(SignUpViewState.UsernameErrorState(usernameErrorMessage))
+            return false
+        }
+
+        val emailErrorMessage = checkEmailInSignUpForm(email)
+        if (emailErrorMessage != null) {
+            viewState.render(SignUpViewState.EmailErrorState(emailErrorMessage))
+            return false
+        }
+
+        val passwordErrorMessage = checkPasswordInSignUpForm(password)
+        if(passwordErrorMessage != null) {
+            viewState.render(SignUpViewState.PasswordErrorState(passwordErrorMessage))
+            return false
+        }
+
+        val confirmPasswordErrorMessage = checkConfirmPasswordInSignUpForm(password, confirmPassword)
+        if (confirmPasswordErrorMessage != null) {
+            viewState.render(SignUpViewState.ConfirmPasswordErrorState(confirmPasswordErrorMessage))
+            return false
+        }
+
+        return true
     }
 
     override fun onSuccess() {

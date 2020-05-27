@@ -43,34 +43,60 @@ class SignUpFragment : MvpAppCompatFragment(), SignUpView, View.OnClickListener 
     override fun onClick(v: View) {
         when(v.id) {
             R.id.btnSignUp -> {
-                presenter.executeSignUp(UserRequestObject(
+                presenter.executeSignUp(
                     tietUsernameSignUpF.text.toString(),
-                    tietFirstnameSignUpF.text.toString(),
-                    tietLastnameSignUpF.text.toString(),
                     tietEmailSignUpF.text.toString(),
-                    tietPhonenumberSignUpF.text.toString(),
-                    tietPasswordSignUpF.text.toString()
-                ))
+                    tietPasswordSignUpF.text.toString(),
+                    tietConfirmPasswordSignUpF.text.toString()
+                )
             }
         }
     }
 
     override fun render(state: SignUpViewState) {
+        resetViews()
         when(state) {
-            is SignUpViewState.SignUpLoadingState ->
+            is SignUpViewState.SignUpLoadingState -> {
                 pbSignUpLoading.visibility = View.VISIBLE
+            }
 
             is SignUpViewState.SignUpFinishedState -> {
-                pbSignUpLoading.visibility = View.GONE
                 Toast.makeText(activity, "You have successfully registered!", Toast.LENGTH_LONG).show()
                 navigateToPostListFragment()
             }
 
             is SignUpViewState.SignUpErrorState -> {
-                pbSignUpLoading.visibility = View.GONE
+                Toast.makeText(activity, state.message, Toast.LENGTH_LONG).show()
+            }
+
+            is SignUpViewState.UsernameErrorState -> {
+                tilUsernameSignUpF.error = state.message
+                Toast.makeText(activity, state.message, Toast.LENGTH_LONG).show()
+            }
+
+            is SignUpViewState.EmailErrorState -> {
+                tilEmailSignUpF.error = state.message
+                Toast.makeText(activity, state.message, Toast.LENGTH_LONG).show()
+            }
+
+            is SignUpViewState.PasswordErrorState -> {
+                tilPasswordSignUpF.error = state.message
+                Toast.makeText(activity, state.message, Toast.LENGTH_LONG).show()
+            }
+
+            is SignUpViewState.ConfirmPasswordErrorState -> {
+                tilConfirmPasswordSignUpF.error = state.message
                 Toast.makeText(activity, state.message, Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    private fun resetViews() {
+        pbSignUpLoading.visibility = View.GONE
+        tilUsernameSignUpF.error = null
+        tilEmailSignUpF.error = null
+        tilPasswordSignUpF.error = null
+        tilConfirmPasswordSignUpF.error = null
     }
 
     private fun navigateToPostListFragment() {
