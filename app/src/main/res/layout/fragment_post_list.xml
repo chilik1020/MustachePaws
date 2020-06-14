@@ -57,7 +57,7 @@
         <ImageView
             android:id="@+id/ivSearchPostList"
             android:padding="@dimen/default_padding"
-            android:src="@drawable/ic_refresh"
+            android:src="@drawable/ic_home"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/ico_on_banner_margin"
             android:layout_marginStart="@dimen/ico_on_banner_margin"
