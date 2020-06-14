@@ -26,8 +26,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvPostList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_gravity="center"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -61,8 +61,8 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/ico_on_banner_margin"
             android:layout_marginStart="@dimen/ico_on_banner_margin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="45dp"
+            android:layout_height="45dp" />
 
 
         <ImageView
@@ -70,18 +70,18 @@
             android:padding="@dimen/default_padding"
             android:src="@drawable/ic_add_circle"
             android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:contentDescription="@string/create_post" />
 
         <ImageView
-            android:src="@drawable/ic_person"
+            android:id="@+id/ivYourAvatar"
             android:padding="@dimen/default_padding"
             android:layout_gravity="center_vertical|end"
             android:layout_marginEnd="@dimen/ico_on_banner_margin"
             android:layout_marginRight="@dimen/ico_on_banner_margin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:contentDescription="@string/my_profile" />
 
     </com.google.android.material.bottomappbar.BottomAppBar>

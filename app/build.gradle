@@ -11,7 +11,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.chilik1020.mustachepaws"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -66,6 +66,9 @@ dependencies {
 
 
     implementation "androidx.fragment:fragment-ktx:$fragment_ktx_version"
+
+    // ExpandableTextView
+    implementation 'at.blogc:expandabletextview:1.0.5'
 
     // UCrop
     implementation 'com.github.yalantis:ucrop:2.2.5'

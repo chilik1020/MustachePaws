@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-
 import com.chilik1020.mustachepaws.R
 import com.chilik1020.mustachepaws.Screens
 import com.chilik1020.mustachepaws.presenters.LoginPresenterImpl
@@ -33,8 +32,8 @@ class LoginFragment : MvpAppCompatFragment(), LoginView, View.OnClickListener, B
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         btnLogin.setOnClickListener(this)
         btnSignUp.setOnClickListener(this)
     }

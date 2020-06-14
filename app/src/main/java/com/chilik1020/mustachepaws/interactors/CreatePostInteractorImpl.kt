@@ -1,7 +1,9 @@
 package com.chilik1020.mustachepaws.interactors
 
+import android.util.Log
 import com.chilik1020.mustachepaws.models.data.PostVO
 import com.chilik1020.mustachepaws.models.repository.PostRepository
+import com.chilik1020.mustachepaws.utils.LOG_TAG
 import com.chilik1020.mustachepaws.utils.getMessageFromThrowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -23,7 +25,8 @@ class CreatePostInteractorImpl : CreatePostInteractor {
         val creatorUsernameRB = RequestBody.create(MediaType.parse("text/plain"), "chilik1020")
 
         val imageFile = File(image)
-        val fileRequestBody = RequestBody.create(MediaType.parse("image/*"), image)
+
+        val fileRequestBody = RequestBody.create(MediaType.parse("image/*"), imageFile)
         val imageMultiPart = MultipartBody.Part.createFormData("image", imageFile.name, fileRequestBody)
 
         val subscribe =

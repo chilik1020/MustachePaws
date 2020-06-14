@@ -8,12 +8,12 @@ import android.widget.Toast
 
 import com.chilik1020.mustachepaws.R
 import com.chilik1020.mustachepaws.Screens
-import com.chilik1020.mustachepaws.models.data.UserRequestObject
 import com.chilik1020.mustachepaws.presenters.SignUpPresenterImpl
 import com.chilik1020.mustachepaws.utils.APPSCOPE
 import com.chilik1020.mustachepaws.views.SignUpView
 import com.chilik1020.mustachepaws.viewstates.SignUpViewState
 import kotlinx.android.synthetic.main.fragment_sign_up.*
+import kotlinx.android.synthetic.main.fragment_sign_up.btnSignUp
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import ru.terrakok.cicerone.Router

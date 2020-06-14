@@ -9,7 +9,8 @@ fun getMessageFromThrowable(t: Throwable): String {
     val message: String? = when(t) {
         is ConnectException -> {
             Log.d(LOG_TAG, "EXCEPTION: type = ConnectException.")
-            "Нет соединения"
+//            "Failed to connect to server"
+            t.message
         }
 
         is SocketTimeoutException -> {

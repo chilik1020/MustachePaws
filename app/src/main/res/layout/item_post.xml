@@ -14,16 +14,16 @@
             android:gravity="center_vertical|start"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/imageView"
+            app:layout_constraintBottom_toTopOf="@id/ivPostPhoto"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" >
 
-<!--            <ImageView-->
-<!--                android:src="@drawable/ic_person"-->
-<!--                android:layout_gravity="center_vertical|end"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"/>-->
+            <ImageView
+                android:id="@+id/ivCreatorAvatar"
+                android:layout_gravity="center_vertical|end"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
 
             <TextView
                 android:id="@+id/creatorUsername"
@@ -35,7 +35,7 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/ivPostPhoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="@dimen/default_padding"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/ivPostPhoto"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -65,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
-                    android:textSize="18sp" />
+                    android:textSize="14sp" />
 
 <!--                <ImageView-->
 <!--                    android:layout_width="wrap_content"-->
@@ -75,12 +75,19 @@
 <!--                    android:src="@drawable/ic_share" />-->
 
             </RelativeLayout>
-
-            <TextView
-                android:id="@+id/postDescription"
+            <at.blogc.android.views.ExpandableTextView
+                android:id="@+id/etvPostDescription"
+                android:maxLines="2"
+                android:ellipsize="end"
+                app:animation_duration="750"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Description" />
+                android:layout_height="wrap_content"/>
+
+<!--            <TextView-->
+<!--                android:id="@+id/postDescription"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Description" />-->
 
             <TextView
                 android:id="@+id/postCreatedAt"

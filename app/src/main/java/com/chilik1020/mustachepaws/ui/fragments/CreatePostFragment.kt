@@ -109,7 +109,6 @@ class CreatePostFragment : MvpAppCompatFragment(), CreatePostView {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.d(LOG_TAG, "ON ACTIVITY REQUEST CODE : $requestCode")
         if (resultCode == Activity.RESULT_OK) {
             when(requestCode) {
                 REQUEST_IMAGE_CAPTURE -> {

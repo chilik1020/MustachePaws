@@ -1,11 +1,13 @@
 package com.chilik1020.mustachepaws.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 
 import com.chilik1020.mustachepaws.R
 import com.chilik1020.mustachepaws.Screens
@@ -30,7 +32,8 @@ class PostListFragment : MvpAppCompatFragment(), PostListView, BackButtonListene
     @InjectPresenter
     lateinit var postListPresenterImpl : PostListPresenterImpl
 
-    private val postListAdapter = PostListAdapter()
+    @Inject
+    lateinit var postListAdapter : PostListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         KTP.openScope(APPSCOPE).inject(this)
@@ -45,11 +48,19 @@ class PostListFragment : MvpAppCompatFragment(), PostListView, BackButtonListene
             adapter = postListAdapter
         }
 
-        ivCreatePost.setOnClickListener { navigateToCreatePostFragment() }
+        initViews()
     }
 
-    override fun onResume() {
-        super.onResume()
+    private fun initViews() {
+        ivCreatePost.setOnClickListener { navigateToCreatePostFragment() }
+        ivSearchPostList.setOnClickListener { postListPresenterImpl.fetchPosts() }
+
+        val linkAvatar = "http://188.120.232.83:8080/mustachepaws/posts/image/img_cropped_20200607_112456_6202859966571979400.jpg"
+        Glide.with(requireActivity()).load(linkAvatar).circleCrop().into(ivYourAvatar)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         postListPresenterImpl.fetchPosts()
     }
 
