@@ -39,6 +39,7 @@ class LoginInteractorImpl : LoginInteractor {
                     listener.onAuthError("Ошибка входа")
             },
                 { error ->
+                    
                     val message =  getMessageFromThrowable(error)
                     listener.onAuthError(message)
                     error.printStackTrace()

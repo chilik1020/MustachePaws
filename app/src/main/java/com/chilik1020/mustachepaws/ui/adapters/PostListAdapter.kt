@@ -64,7 +64,7 @@ class PostListAdapter : RecyclerView.Adapter<PostListAdapter.PostViewHolder>() {
         var ivPostPhoto: ImageView = itemView.ivPostPhoto
         var ivCreatorAvatar: ImageView = itemView.ivCreatorAvatar
         var tvCreatorUsername: TextView = itemView.creatorUsername
-        var tvPostStatus: TextView = itemView.postStatus
+        var tvPostStatus: TextView = itemView.tvPostStatus
         var tvPostDescription: ExpandableTextView = itemView.etvPostDescription
         var tvPostCreatedAt: TextView = itemView.postCreatedAt
     }

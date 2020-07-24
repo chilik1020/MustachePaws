@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
@@ -39,62 +39,118 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            app:layout_constraintBottom_toTopOf="@id/llPostContent"
+            app:layout_constraintBottom_toTopOf="@id/tvPostStatus"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/llPostUserInfo" />
 
-        <LinearLayout
-            android:id="@+id/llPostContent"
-            android:gravity="start"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/default_padding"
-            app:layout_constraintTop_toBottomOf="@+id/ivPostPhoto"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+    <TextView
+        android:id="@+id/tvPostStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivPostPhoto"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin" />
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tvAnimalTypeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Кому?: "
+        android:textSize="14sp"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvPostStatus"/>
 
-                <TextView
-                    android:id="@+id/postStatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:textSize="14sp" />
+    <TextView
+        android:id="@+id/tvAnimalType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@+id/tvPostStatus"
+        app:layout_constraintStart_toEndOf="@id/tvAnimalTypeLabel"/>
 
-<!--                <ImageView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_alignParentEnd="true"-->
-<!--                    android:layout_gravity="center_vertical|end"-->
-<!--                    android:src="@drawable/ic_share" />-->
+    <TextView
+        android:id="@+id/tvTypeOfHelpLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Какая помощь нужна?: "
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@+id/tvAnimalTypeLabel"
+        app:layout_constraintStart_toStartOf="parent"/>
 
-            </RelativeLayout>
-            <at.blogc.android.views.ExpandableTextView
-                android:id="@+id/etvPostDescription"
-                android:maxLines="2"
-                android:ellipsize="end"
-                app:animation_duration="750"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tvTypeOfHelp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@+id/tvAnimalTypeLabel"
+        app:layout_constraintStart_toEndOf="@id/tvTypeOfHelpLabel"/>
 
-<!--            <TextView-->
-<!--                android:id="@+id/postDescription"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Description" />-->
+    <TextView
+        android:id="@+id/tvPlaceLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Где?:"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@+id/tvTypeOfHelpLabel"
+        app:layout_constraintStart_toStartOf="parent"/>
 
-            <TextView
-                android:id="@+id/postCreatedAt"
-                android:gravity="end"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"/>
+    <TextView
+        android:id="@+id/tvPlace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@+id/tvTypeOfHelpLabel"
+        app:layout_constraintStart_toEndOf="@id/tvPlaceLabel"/>
 
-        </LinearLayout>
-</LinearLayout>
+
+    <at.blogc.android.views.ExpandableTextView
+        android:id="@+id/etvPostDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:padding="@dimen/default_padding"
+        app:animation_duration="750"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvPlaceLabel" />
+
+    <TextView
+        android:text="Комментарии(16)"
+        android:id="@+id/postComments"
+        android:gravity="end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        app:layout_constraintTop_toBottomOf="@id/etvPostDescription"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:text="29 02 2020 friday"
+        android:id="@+id/postCreatedAt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_marginRight="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        app:layout_constraintTop_toBottomOf="@id/etvPostDescription"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
