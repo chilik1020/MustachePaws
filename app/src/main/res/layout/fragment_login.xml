@@ -20,9 +20,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilUsernameLoginF"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MaterialTextInputLayout"
             android:hint="@string/username"
             app:errorEnabled="true">
 
@@ -34,9 +32,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilPasswordLoginF"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MaterialTextInputLayout"
             android:hint="@string/password"
             app:errorEnabled="true">
 
@@ -54,29 +50,13 @@
             android:background="@color/colorPrimary"
             android:text="@string/login" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvNoAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin">
-
-            <TextView
-                android:id="@+id/tvNoAccount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/default_padding"
-                android:text="@string/no_account"
-                android:textSize="18sp" />
-
-            <!--            <TextView-->
-            <!--                android:id="@+id/tvRegister"-->
-            <!--                android:text="@string/register"-->
-            <!--                android:textSize="18sp"-->
-            <!--                android:textColor="@color/colorAccent"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:padding="@dimen/default_padding" />-->
-
-        </LinearLayout>
+            android:padding="@dimen/default_padding"
+            android:text="@string/no_account"
+            android:textSize="18sp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSignUp"

@@ -14,4 +14,19 @@
         <item name="android:layout_height">?attr/actionBarSize</item>
     </style>
 
+    <style name="MaterialTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">@color/primaryTextFieldColorLight</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="SpinnerStyle">
+        <item name="android:spinnerMode">dropdown</item>
+        <item name="android:background">@drawable/background_spinner</item>
+        <item name="android:popupBackground">@drawable/background_spinner_opacity</item>
+        <item name="android:textColorHint">@color/primaryColor</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/spinner_height</item>
+    </style>
+
 </resources>

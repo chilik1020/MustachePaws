@@ -6,5 +6,8 @@ data class Post(
     val description: String,
     val imageLink: String,
     val creatorUsername: String,
+    val typeOfAnimal: String,
+    val ageOfAnimal: String,
+    val typeOfHelp: String,
     val createdAt: String
 )

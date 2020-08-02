@@ -1,9 +1,6 @@
 package com.chilik1020.mustachepaws.interactors
 
-import android.util.Log
-import com.chilik1020.mustachepaws.models.data.PostVO
 import com.chilik1020.mustachepaws.models.repository.PostRepository
-import com.chilik1020.mustachepaws.utils.LOG_TAG
 import com.chilik1020.mustachepaws.utils.getMessageFromThrowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

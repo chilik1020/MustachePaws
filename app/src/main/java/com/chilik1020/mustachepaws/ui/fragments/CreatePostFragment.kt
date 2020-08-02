@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
@@ -50,7 +51,9 @@ class CreatePostFragment : MvpAppCompatFragment(), CreatePostView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         KTP.openScope(APPSCOPE).inject(this)
-        return inflater.inflate(R.layout.fragment_create_post, container, false)
+
+        val root = inflater.inflate(R.layout.fragment_create_post, container, false)
+        return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,6 +62,21 @@ class CreatePostFragment : MvpAppCompatFragment(), CreatePostView {
     }
 
     private fun initViews() {
+
+        val arrayAdapterAnimalList = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.type_animals_list,
+            R.layout.item_spinner
+        )
+
+        val arrayAdapterHelpList = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.type_help_list,
+            R.layout.item_spinner
+        )
+        spinTypeAnimal.adapter = arrayAdapterAnimalList
+        spinTypeHelp.adapter = arrayAdapterHelpList
+
         ivPhotoCreatePostF.setOnClickListener { onClickImageCapture() }
         btnCreatePost.setOnClickListener {
             presenter.createPost(

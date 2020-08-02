@@ -20,9 +20,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilUsernameSignUpF"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MaterialTextInputLayout"
             android:hint="@string/username"
             app:errorEnabled="true">
 
@@ -61,9 +59,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilEmailSignUpF"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MaterialTextInputLayout"
             android:hint="@string/email"
             app:errorEnabled="true">
 
@@ -88,9 +84,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilPasswordSignUpF"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MaterialTextInputLayout"
             android:hint="@string/password"
             app:errorEnabled="true">
 
@@ -103,9 +97,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilConfirmPasswordSignUpF"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MaterialTextInputLayout"
             android:hint="@string/password_confirm"
             app:errorEnabled="true">
 

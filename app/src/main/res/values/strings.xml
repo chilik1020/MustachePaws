@@ -32,8 +32,25 @@
     <string name="menu_logout">Выйти</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="create_post">Create post</string>
     <string name="my_profile">My profile</string>
     <string name="take_photo">Take photo</string>
+
+    <string-array name="type_animals_list">
+        <item>Кот</item>
+        <item>Кошка</item>
+        <item>Собака(мальчик)</item>
+        <item>Собака(девочка)</item>
+        <item>Черепаха</item>
+        <item>Кролик</item>
+    </string-array>
+
+    <string-array name="type_help_list">
+        <item>Передержка</item>
+        <item>Транспорт</item>
+        <item>Корм</item>
+        <item>Мед. помошь</item>
+        <item>Хозяин</item>
+    </string-array>
+
 </resources>
